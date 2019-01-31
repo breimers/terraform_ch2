@@ -32,26 +32,11 @@ resource "aws_security_group" "instance" {
     cidr_blocks=["0.0.0.0/0"]
   }
 }
-#
-#resource "aws_route53_zone" "main"{
-#  name = "bradsbox.info"
-#}
-#resource "aws_route53_zone" "ch2"{
-#  name = "ch2.bradsbox.info"
-#  tags = {
-#    Environment = "ch2"
-#  }
-#}
-#resource "aws_route53_record" "ch2-ns"{
-#  zone_id = "${aws_route53_zone.main.zone_id}"
-#  name = "ch2.bradsbox.info"
-#  type = "NS"
-#  ttl = "300"
-#
-#  records = [
-#	"${aws_route53_zone.ch2.name_servers.0}",
-#        "${aws_route53_zone.ch2.name_servers.1}",
-#        "${aws_route53_zone.ch2.name_servers.2}",
-#        "${aws_route53_zone.ch2.name_servers.3}",
-#    ]
-#}
+
+resource "aws_route53_record" "www" {
+  zone_id = "Z19IM8NMB0HCMA"
+  name    = "www.bradsbox.info"
+  type    = "A"
+  ttl     = "300"
+  records = ["${aws_instance.ch2test.public_ip}"]
+}
